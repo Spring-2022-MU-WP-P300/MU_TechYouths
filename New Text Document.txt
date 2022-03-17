@@ -1,0 +1,55 @@
+We are going to creat e browser basd App. Web App.
+code editor: VS Code
+
+Frontend:
+React, Redux
+
+Backend:
+.Net
+
+what is .NET?
+a developer platform. can be used any type of Applications. It is cross-platform and open-source.
+
+Packet Manager: Nuget
+dotnet CLI
+
+
+Web API: HTTP Based services on top of .Net. Can be consumed by browsers,  Mobile Apps etc.
+
+
+Starting:
+dowwload .net 5, node.js.
+
+Setup:
+dotnet new sln
+dotnet new webapi -o API
+dotnet sln add API
+
+Run APP in developer mode:
+Got to API -> dotnet run
+
+
+
+
+Install :
+Microsoft.EntityFrameworkCore.Sqlite v5.08 with API.csproj
+Microsoft.EntityFrameworkCore.Design v5.08 with API.csproj
+
+
+API:
+dotnet tool install --global dotnet-ef --version 5.0.8
+
+dotnet ef migrations add InitialCreate -o Data/Migrations
+dotnet ef database update
+
+ctl+p : >sql -> open database -> API\Store.db
+
+
+dotnet ef database drop
+
+dotnet watch run
+
+
+https://reactjs.org/docs/create-a-new-react-app.html
+npx create-react-app public --template typescript --use-npm
+
