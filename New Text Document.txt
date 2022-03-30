@@ -53,3 +53,12 @@ dotnet watch run
 https://reactjs.org/docs/create-a-new-react-app.html
 npx create-react-app public --template typescript --use-npm
 
+
+* typescript is  a superset of JS. Brower only understand JS. It comes with compiler. It compiles typescrupt code JS.
+
+Addign CORS configuration to the browser:
+In StartUp.cs ->
+services.AddCors();
+app.UseCors(options => {
+ options.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+ });

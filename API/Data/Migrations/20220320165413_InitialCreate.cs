@@ -18,7 +18,8 @@ namespace API.Data.Migrations
                     Type = table.Column<string>(type: "TEXT", nullable: true),
                     Brand = table.Column<string>(type: "TEXT", nullable: true),
                     CurrentQuantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    PictureUrl = table.Column<string>(type: "TEXT", nullable: true)
+                    PictureUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    Warranty = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

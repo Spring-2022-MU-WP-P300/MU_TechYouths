@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\MyDrive\\e-commerce-store\\API\\API.csproj": {}
+    "C:\\MyDrive\\MU_TechYouths\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\MyDrive\\e-commerce-store\\API\\API.csproj": {
+    "C:\\MyDrive\\MU_TechYouths\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\MyDrive\\e-commerce-store\\API\\API.csproj",
+        "projectUniqueName": "C:\\MyDrive\\MU_TechYouths\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\MyDrive\\e-commerce-store\\API\\API.csproj",
+        "projectPath": "C:\\MyDrive\\MU_TechYouths\\API\\API.csproj",
         "packagesPath": "C:\\Users\\mushf\\.nuget\\packages\\",
-        "outputPath": "C:\\MyDrive\\e-commerce-store\\API\\obj\\",
+        "outputPath": "C:\\MyDrive\\MU_TechYouths\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mushf\\AppData\\Roaming\\NuGet\\NuGet.Config"
