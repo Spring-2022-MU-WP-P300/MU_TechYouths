@@ -42,6 +42,9 @@ dotnet tool install --global dotnet-ef --version 5.0.8
 dotnet ef migrations add InitialCreate -o Data/Migrations
 dotnet ef database update
 
+
+dotnet ef migrations add Cart
+
 ctl+p : >sql -> open database -> API\Store.db
 
 
@@ -62,3 +65,32 @@ services.AddCors();
 app.UseCors(options => {
  options.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
  });
+
+
+
+// inside public folder -
+https://mui.com/getting-started/installation/
+
+
+
+// AppBar
+https://mui.com/components/app-bar/#main-content
+
+
+// cd public
+npm install react-router-dom @types/react-router-dom
+
+//
+reactrouter.com
+
+//
+npm install axios
+
+//
+npm install @mui/lab
+
+//
+npm install redux react-redux
+
+//
+npm install @reduxjs/toolkit

@@ -23,7 +23,7 @@ namespace API.Data
                     Type = "Fabric Sofa",
                     Brand = "Swivel",
                     CurrentQuantity = 5,
-                    PictureUrl = "/images/chairs/Amber-Swivel-Chair.webp",
+                    PictureUrl = "/images/Amber-Swivel-Chair.webp",
                     Warranty = "Frame and Mechanism 3 Years, Foam & Fabric 1 Year",                   
                 },
                 new Product 
@@ -34,8 +34,107 @@ namespace API.Data
                     Type = "Fabric Sofa",
                     Brand = "Swivel",
                     CurrentQuantity = 10,
-                    PictureUrl = "/images/chairs/living-room-interior.jpg",
+                    PictureUrl = "/images/living-room-interior.jpg",
                     Warranty = "Frame and Mechanism 3 Years, Foam & Fabric 1 Year",                   
+                },
+                new Product 
+                {
+                    Name = "Dining Chair",
+                    Description = "comfy and will add a touch of style, Dining Chair, Home Interior, Modern.",
+                    Price = 5000,
+                    Type = "Chair",
+                    Brand = "ELiving",
+                    CurrentQuantity = 8,
+                    PictureUrl = "/images/dining-chair.jpg",
+                    Warranty = "Frame and Mechanism 3 Years, Foam & Fabric 1 Year",                   
+                },
+                 new Product 
+                {
+                    Name = "Bedside Table",
+                    Description = "Bedside Table, Home Interior, Modern.",
+                    Price = 8000,
+                    Type = "Table",
+                    Brand = "ELiving",
+                    CurrentQuantity = 5,
+                    PictureUrl = "/images/bedside-table.jpg",
+                    Warranty = "Frame and Mechanism 1 Years",                   
+                },
+                new Product 
+                {
+                    Name = "Cuppa Desk",
+                    Description = "Modern Home & Office table.",
+                    Price = 8000,
+                    Type = "Table",
+                    Brand = "ELiving",
+                    CurrentQuantity = 10,
+                    PictureUrl = "/images/cuppa-desk.jpg",
+                    Warranty = "Frame and Mechanism 5 Years",                
+                },
+                new Product 
+                {
+                    Name = "Outdoor Bench",
+                    Description = "Sanfir 2 Seater Outdoor comfy Bench.",
+                    Price = 15000,
+                    Type = "Chair",
+                    Brand = "ELiving",
+                    CurrentQuantity = 12,
+                    PictureUrl = "/images/outdoor-bench.jpg",
+                    Warranty = "Frame and Mechanism 3 Years",                
+                },
+                new Product 
+                {
+                    Name = "Leather Office Chair",
+                    Description = "High Back PU Leather Office Chair.",
+                    Price = 20000,
+                    Type = "Chair",
+                    Brand = "ELiving",
+                    CurrentQuantity = 9,
+                    PictureUrl = "/images/office-chair.jpg",
+                    Warranty = "Frame and Mechanism 1 Years",                
+                },
+                new Product 
+                {
+                    Name = "Media Storage Cabinet",
+                    Description = "Sven Multimedia Cabinet is a careful curation of confident works in rich textures and harmonising colours. A collection of home furniture designed for the contemporary lifestyle by contemporary makers, thinkers, and dreamers.",
+                    Price = 30000,
+                    Type = "Storage",
+                    Brand = "ELiving",
+                    CurrentQuantity = 5,
+                    PictureUrl = "/images/media-storage-cabinet.jpg",
+                    Warranty = "Frame and Mechanism 4 Years.",                
+                },
+                new Product 
+                {
+                    Name = "3 Seater Sofa",
+                    Description = "Comfy 3 Seater Sofa.",
+                    Price = 50000,
+                    Type = "Sofa",
+                    Brand = "ELiving",
+                    CurrentQuantity = 10,
+                    PictureUrl = "/images/3-seater-sofa.jpg",
+                    Warranty = "Frame and Mechanism 4 Years, Foam & Fabric 1 Year.",
+                },
+                new Product 
+                {
+                    Name = "Dining Set",
+                    Description = "Your dining table provides you with the best place ad environment where you can sit, eat and talk with your family. So, why not have a dining table which provides enough space to accommodate six people.",
+                    Price = 50000,
+                    Type = "Dining",
+                    Brand = "ELiving",
+                    CurrentQuantity = 4,
+                    PictureUrl = "/images/dining-set.jpg",
+                    Warranty = "Frame and Mechanism 4 Years.",                
+                },
+                new Product 
+                {
+                    Name = "Twin Bed",
+                    Description = "Comfy 3 Seater Sofa.",
+                    Price = 18000,
+                    Type = "Bed",
+                    Brand = "ELiving",
+                    CurrentQuantity = 8,
+                    PictureUrl = "/images/twin-bed.webp",
+                    Warranty = "Frame and Mechanism 4 Years, Fabric 1 Year.",
                 },
             };
 
