@@ -22,7 +22,7 @@ const Register = () => {
           </div>
           <div className="policy">
             <input type="checkbox" />
-            <h3>I accept all terms & condition</h3>
+            <h3>I accept all terms & conditions</h3>
           </div>
           <div className="input-box button">
             <input type="Submit" value="Register Now" />
