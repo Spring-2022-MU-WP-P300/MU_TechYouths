@@ -1,13 +1,35 @@
 using API.Entities;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Data
 {
     public static class InitializeDatabase
     {
-        public static void Initialize(dbContext context)
+        public static async Task Initialize(dbContext context, UserManager<User> user)
         {
+            if (user.Users.Count() == 0)
+            {
+                var newAdmin = new User
+                {
+                    UserName = "Admin",
+                    Email = "Admin@example.com",
+                };
+                await user.CreateAsync(newAdmin, "password");
+                await user.AddToRolesAsync(newAdmin, new[] {"General", "Admin"});
+
+                var newUser = new User
+                {
+                    UserName = "Jerry",
+                    Email = "Jerry@example.com",
+                };
+                await user.CreateAsync(newUser, "password");
+                await user.AddToRolesAsync(newUser, new[] {"General"});
+            }
+
             if (context.Products.Any())
             {
                 return;

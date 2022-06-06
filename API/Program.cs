@@ -9,21 +9,25 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using API.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             var scope = host.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<dbContext>();
+            var user = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
             try {
-                context.Database.Migrate();
-                InitializeDatabase.Initialize(context);
+                await context.Database.MigrateAsync();
+                await InitializeDatabase.Initialize(context, user);
             }
             catch (Exception e) {
                 logger.LogError(e, "Migrations Error");
@@ -32,7 +36,7 @@ namespace API
                 scope.Dispose();
             }
 
-            host.Run();
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

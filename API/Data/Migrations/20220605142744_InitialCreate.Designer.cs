@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(dbContext))]
-    partial class dbContextModelSnapshot : ModelSnapshot
+    [Migration("20220605142744_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,15 +183,15 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "15a89a5f-88c5-4217-a24f-7390d6f8e6d9",
-                            ConcurrencyStamp = "93401964-1309-446a-8b37-d5fe127933a1",
+                            Id = "cef51936-ddb8-4603-9bd6-539eee6ab604",
+                            ConcurrencyStamp = "fb068e0a-15c1-499b-aa43-d786dbede97c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fda9a6bc-9017-4bea-867c-2d29f8d7131f",
-                            ConcurrencyStamp = "c0d043a1-752c-40ca-8578-1b97562cf972",
+                            Id = "78d2a001-ad7d-4b39-86d3-4604e7d5fe5b",
+                            ConcurrencyStamp = "ba830b75-46e7-4d3c-b7d0-fd618863fde0",
                             Name = "General",
                             NormalizedName = "GENERAL"
                         });

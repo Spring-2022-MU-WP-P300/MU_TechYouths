@@ -12,8 +12,9 @@ using API.DataAccess;
 
 namespace API.Controllers
 {
-    
-    public class CartController : BaseController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class CartController
     {
         private readonly dbContext db;
         public CartController(dbContext dbo)

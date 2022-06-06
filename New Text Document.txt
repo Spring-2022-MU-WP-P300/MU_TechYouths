@@ -94,3 +94,12 @@ npm install redux react-redux
 
 //
 npm install @reduxjs/toolkit
+
+//
+1. ctrl + p
+2. >nuget gallery
+Microsoft.AspNetCore.Authentication.JwtBearer v5
+Microsoft.AspNetCore.Identity.EntityFrame : use to create the tables and migration to give use everything
+
+
+// dotnet ef migrations IdentityAdded

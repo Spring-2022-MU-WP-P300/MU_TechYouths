@@ -10,8 +10,9 @@ using System.Text.Json;
 
 namespace API.Controllers
 {
-    
-    public class ProductsController : BaseController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductsController
     {
         private readonly dbContext db;
         public ProductsController(dbContext dbo)

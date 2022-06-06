@@ -112,3 +112,15 @@ C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.dll
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\ref\API.dll
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.pdb
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.genruntimeconfig.cache
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
