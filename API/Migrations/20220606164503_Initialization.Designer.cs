@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace API.Data.Migrations
+namespace API.Migrations
 {
     [DbContext(typeof(dbContext))]
-    [Migration("20220605145529_UpdateDatabase")]
-    partial class UpdateDatabase
+    [Migration("20220606164503_Initialization")]
+    partial class Initialization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,15 +183,15 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "15a89a5f-88c5-4217-a24f-7390d6f8e6d9",
-                            ConcurrencyStamp = "93401964-1309-446a-8b37-d5fe127933a1",
+                            Id = "7eb8ab2d-fe8d-4588-a755-108d7383ad47",
+                            ConcurrencyStamp = "9b65a110-ebc5-4a7a-aa56-5883037f9a61",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fda9a6bc-9017-4bea-867c-2d29f8d7131f",
-                            ConcurrencyStamp = "c0d043a1-752c-40ca-8578-1b97562cf972",
+                            Id = "a8b7fd66-f8a0-40c4-8157-f10e23e58fa4",
+                            ConcurrencyStamp = "d8af2856-a33d-44d4-8849-2544b3cffa2a",
                             Name = "General",
                             NormalizedName = "GENERAL"
                         });

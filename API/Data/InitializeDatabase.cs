@@ -9,25 +9,25 @@ namespace API.Data
 {
     public static class InitializeDatabase
     {
-        public static async Task Initialize(dbContext context, UserManager<User> user)
+        public static async Task Initialize(dbContext context, UserManager<User> userManager)
         {
-            if (user.Users.Count() == 0)
+            if (userManager.Users.Count() == 0)
             {
-                var newAdmin = new User
+                var admin = new User
                 {
-                    UserName = "Admin",
-                    Email = "Admin@example.com",
+                    UserName = "admin",
+                    Email = "admin@example.com",
                 };
-                await user.CreateAsync(newAdmin, "password");
-                await user.AddToRolesAsync(newAdmin, new[] {"General", "Admin"});
+                await userManager.CreateAsync(admin, "password");
+                await userManager.AddToRolesAsync(admin, new[] {"General", "Admin"});
 
-                var newUser = new User
+                var user = new User
                 {
-                    UserName = "Jerry",
-                    Email = "Jerry@example.com",
+                    UserName = "jerry",
+                    Email = "jerry@example.com",
                 };
-                await user.CreateAsync(newUser, "password");
-                await user.AddToRolesAsync(newUser, new[] {"General"});
+                await userManager.CreateAsync(user, "password");
+                await userManager.AddToRolesAsync(user, new[] {"General"});
             }
 
             if (context.Products.Any())
@@ -41,10 +41,10 @@ namespace API.Data
                 {
                     Name = "Amber Swivel Chair",
                     Description = "It is just so cute and comfy and will add a touch of style and soft touch to other deocors and furnitures.",
-                    Price = 20000,
+                    Price = 10000,
                     Type = "Fabric Sofa",
                     Brand = "Swivel",
-                    CurrentQuantity = 5,
+                    CurrentQuantity = 10,
                     PictureUrl = "/images/Amber-Swivel-Chair.webp",
                     Warranty = "Frame and Mechanism 3 Years, Foam & Fabric 1 Year",                   
                 },
@@ -52,7 +52,7 @@ namespace API.Data
                 {
                     Name = "Living Room Interior",
                     Description = "Scandinavia, Serbia and Montenegro, Living Room, Home Interior, Modern.",
-                    Price = 10000,
+                    Price = 50000,
                     Type = "Fabric Sofa",
                     Brand = "Swivel",
                     CurrentQuantity = 10,
@@ -63,10 +63,10 @@ namespace API.Data
                 {
                     Name = "Dining Chair",
                     Description = "comfy and will add a touch of style, Dining Chair, Home Interior, Modern.",
-                    Price = 5000,
+                    Price = 3000,
                     Type = "Chair",
                     Brand = "ELiving",
-                    CurrentQuantity = 8,
+                    CurrentQuantity = 10,
                     PictureUrl = "/images/dining-chair.jpg",
                     Warranty = "Frame and Mechanism 3 Years, Foam & Fabric 1 Year",                   
                 },
@@ -74,10 +74,10 @@ namespace API.Data
                 {
                     Name = "Bedside Table",
                     Description = "Bedside Table, Home Interior, Modern.",
-                    Price = 8000,
+                    Price = 15000,
                     Type = "Table",
                     Brand = "ELiving",
-                    CurrentQuantity = 5,
+                    CurrentQuantity = 20,
                     PictureUrl = "/images/bedside-table.jpg",
                     Warranty = "Frame and Mechanism 1 Years",                   
                 },

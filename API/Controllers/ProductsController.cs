@@ -11,10 +11,8 @@ using System.Text.Json;
 // DOCUMENTATION NEEDED
 
 namespace API.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController
+{    
+    public class ProductsController : BaseController
     {
         private readonly dbContext db;
         public ProductsController(dbContext dbo)

@@ -17,7 +17,11 @@ using Microsoft.EntityFrameworkCore;
 using API.MiddleWare;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens;
+using System.Text; // The name 'Encoding' exists here
 
 namespace API
 {
@@ -33,28 +37,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
             
-            services.AddIdentityCore<User>(
-                option => option.User.RequireUniqueEmail = true;
-            ).AddRoles<IdentityRole>().AddEntityFrameworkStores<dbContext>();
-            
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
-                {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                            .GetBytes(Configuration["JWTSettings:TokenKey"]))
-                    };
-                });
-
-            services.AddAuthorization();
-
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -62,11 +45,11 @@ namespace API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "Jwt auth header",
+                    Description = "JWT Security",
                     Name = "Authorization",
+                    Scheme = "Bearer",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Type = SecuritySchemeType.ApiKey
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -90,6 +73,28 @@ namespace API
             services.AddDbContext<dbContext>((option) => {
                 option.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddCors();
+            
+            services.AddIdentityCore<User>(option =>
+            {
+                option.User.RequireUniqueEmail = true;
+            }).AddRoles<IdentityRole>().AddEntityFrameworkStores<dbContext>();
+            
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                            .GetBytes(Configuration["JWTSettings:TokenKey"]))
+                    };
+            });
+
+            services.AddAuthorization();
 
             services.AddScoped<Token>();
         }

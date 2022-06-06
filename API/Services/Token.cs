@@ -13,13 +13,13 @@ namespace API.Services
 {
     public class Token
     {
-        private readonly IConfiguration _config;
-        private readonly UserManager<User> _userManager;
+        private readonly IConfiguration config;
+        private readonly UserManager<User> userManager;
 
-        public TokenService(UserManager<User> userManager, IConfiguration config)
+        public Token(UserManager<User> userManager, IConfiguration config)
         {
-            _config = config;
-            _userManager = userManager;
+            this.config = config;
+            this.userManager = userManager;
         }
 
         public async Task<string> GenerateToken(User user)
@@ -30,14 +30,14 @@ namespace API.Services
                 new Claim(ClaimTypes.Name, user.UserName)
             };
 
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await userManager.GetRolesAsync(user);
 
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));    
             }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTSettings:TokenKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWTSettings:TokenKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
             var tokenOptions = new JwtSecurityToken

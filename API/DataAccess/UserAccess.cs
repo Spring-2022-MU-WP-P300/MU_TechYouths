@@ -6,6 +6,6 @@ namespace API.DataAccess
     {
         public string Email { get; set; }
         public string Token { get; set; }
-        public CartAccess Basket { get; set; }
+        public CartDA Cart { get; set; }
     }
 }

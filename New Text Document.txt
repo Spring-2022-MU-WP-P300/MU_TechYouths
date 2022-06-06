@@ -39,7 +39,7 @@ Microsoft.EntityFrameworkCore.Design v5.08 with API.csproj
 API:
 dotnet tool install --global dotnet-ef --version 5.0.8
 
-dotnet ef migrations add InitialCreate -o Data/Migrations
+dotnet ef migrations add InitialCreate -o Properties/Migrations
 dotnet ef database update
 
 

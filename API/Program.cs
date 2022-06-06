@@ -21,13 +21,14 @@ namespace API
         {
             var host = CreateHostBuilder(args).Build();
             var scope = host.Services.CreateScope();
+
             var context = scope.ServiceProvider.GetRequiredService<dbContext>();
-            var user = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
             try {
                 await context.Database.MigrateAsync();
-                await InitializeDatabase.Initialize(context, user);
+                await InitializeDatabase.Initialize(context, userManager);
             }
             catch (Exception e) {
                 logger.LogError(e, "Migrations Error");

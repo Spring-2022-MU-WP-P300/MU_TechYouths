@@ -11,10 +11,8 @@ using Microsoft.AspNetCore.Http;
 using API.DataAccess;
 
 namespace API.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class CartController
+{    
+    public class CartController : BaseController
     {
         private readonly dbContext db;
         public CartController(dbContext dbo)
