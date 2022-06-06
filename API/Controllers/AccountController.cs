@@ -38,22 +38,10 @@ namespace API.Controllers
                 return Unauthorized();
             }
 
-            // var userCart = await GetCart(loginAccess.Username);
-            // var anonCart = await GetCart(Request.Cookies["clientId"]);
-
-            // if (anonCart != null)
-            // {
-            //     if (userCart != null) db.Carts.Remove(userCart);
-            //     anonCart.ClientId = user.UserName;
-            //     Response.Cookies.Delete("clientId");
-            //     await db.SaveChangesAsync();
-            // }
-
             return new UserAccess
             {
                 Email = user.Email,
                 Token = await token.GenerateToken(user),
-                // Cart = anonCart != null ? anonCart.MapCartToDA() : userCart?.MapCartToDA()
             };
         }
 
@@ -70,11 +58,6 @@ namespace API.Controllers
 
             if (!res.Succeeded)
             {
-                // foreach (var e in res.Errors)
-                // {
-                //     ModelState.AddModelError(e.Code, e.Description);
-                // }
-
                 return ValidationProblem();
             }
 
@@ -89,28 +72,11 @@ namespace API.Controllers
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
 
-            // var userCart = await GetCart(User.Identity.Name);
-
             return new UserAccess
             {
                 Email = user.Email,
                 Token = await token.GenerateToken(user)
-                // Cart = userCart?.MapCartToDto()
             };
         }
-
-        // private async Task<Cart> GetCart(string clientId)
-        // {
-        //     if (string.IsNullOrEmpty(clientId))
-        //     {
-        //         Response.Cookies.Delete("clientId");
-        //         return null;
-        //     }
-
-        //     return await db.Carts
-        //         .Include(i => i.Items)
-        //         .ThenInclude(p => p.Product)
-        //         .FirstOrDefaultAsync(x => x.ClientId == clientId);
-        // }
     }
 }
