@@ -12,13 +12,15 @@ namespace API.Data
         public static async Task Initialize(dbContext context, UserManager<User> userManager)
         {
             if (userManager.Users.Count() == 0)
-            {
+            {            
+                // warn: Microsoft.AspNetCore.Identity.UserManager
+                // PasswordRequiresNonAlphanumeric;PasswordRequiresDigit;PasswordRequiresUpper.
                 var admin = new User
                 {
                     UserName = "admin",
                     Email = "admin@example.com",
                 };
-                await userManager.CreateAsync(admin, "password");
+                await userManager.CreateAsync(admin, "adminA1@");
                 await userManager.AddToRolesAsync(admin, new[] {"General", "Admin"});
 
                 var user = new User
@@ -26,7 +28,7 @@ namespace API.Data
                     UserName = "jerry",
                     Email = "jerry@example.com",
                 };
-                await userManager.CreateAsync(user, "password");
+                await userManager.CreateAsync(user, "jerryA1@");
                 await userManager.AddToRolesAsync(user, new[] {"General"});
             }
 

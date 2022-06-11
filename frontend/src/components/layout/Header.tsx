@@ -14,7 +14,6 @@ import { ShoppingCart } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 
 import { CartItem } from "../../models/cart";
-import { current } from "@reduxjs/toolkit";
 
 const navLinks = [
   { title: "Products", path: "/catalog" },

@@ -13,13 +13,13 @@ namespace API.Services
 {
     public class Token
     {
-        private readonly IConfiguration config;
         private readonly UserManager<User> userManager;
+        private readonly IConfiguration config;
 
         public Token(UserManager<User> userManager, IConfiguration config)
         {
-            this.config = config;
             this.userManager = userManager;
+            this.config = config;
         }
 
         public async Task<string> GenerateToken(User user)
@@ -32,21 +32,26 @@ namespace API.Services
 
             var roles = await userManager.GetRolesAsync(user);
 
-            foreach (var role in roles)
+            foreach (var currentRole in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));    
+                claims.Add(new Claim(ClaimTypes.Role, currentRole));    
             }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWTSettings:TokenKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+            // We have to ensure this key never leaves server. It must be in the safest place.
+            // NB: https://stackoverflow.com/questions/47279947/idx10603-the-algorithm-hs256-requires-the-securitykey-keysize-to-be-greater
+            // For the secret key name we have to provide enough characters.
+            // It has been written in the appsettings.Development.json file.
+            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWTSettings:TokenKey"]));
+
+            var signInCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha512);
 
             var tokenOptions = new JwtSecurityToken
             (
                 issuer: null,
                 audience: null,
                 claims: claims,
-                expires: DateTime.Now.AddDays(7),
-                signingCredentials: creds
+                expires: DateTime.Now.AddDays(30),
+                signingCredentials: signInCredentials
             );
 
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);

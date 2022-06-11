@@ -25,8 +25,8 @@ const Cart = {
 
 export const Account = {
   currentUser: () => requests.get("account/currentUser"),
-  login: (values: any) => requests.get("account/login", values),
-  register: (values: any) => requests.get("account/register", values),
+  login: (values: any) => requests.post("account/login", values),
+  register: (values: any) => requests.post("account/register", values),
 };
 
 const Products = {

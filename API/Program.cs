@@ -33,9 +33,6 @@ namespace API
             catch (Exception e) {
                 logger.LogError(e, "Migrations Error");
             }
-            finally {
-                scope.Dispose();
-            }
 
             await host.RunAsync();
         }

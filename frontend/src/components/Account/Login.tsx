@@ -7,27 +7,27 @@ import { setLoginUserData } from "./AccountSlice";
 import "./Login.css";
 
 const Login = () => {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
   const history = useNavigate(); // In react-router-dom v6 useHistory() is replaced by useNavigate().
   const dispatch = useDispatch();
 
   const onChangeUserName = (e: any) => {
-    setUserName(e.value);
+    setValues({ ...values, username: e.target.value });
   };
 
   const onChangePassword = (e: any) => {
-    setPassword(e.value);
+    setValues({ ...values, password: e.target.value });
   };
 
-  const onSubmit = async () => {
-    const data = await Account.login({
-      userName: userName,
-      password: password,
-    });
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    const data = await Account.login(values);
     localStorage.setItem("user", JSON.stringify(data));
-    dispatch(setLoginUserData(data));
     history("/catalog");
+    // dispatch(setLoginUserData(data));
     return data;
   };
 
@@ -43,8 +43,8 @@ const Login = () => {
               <i className="fas fa-user"></i>
               <input
                 type="text"
-                placeholder="Email"
-                value={userName}
+                placeholder="User Name"
+                value={values.username}
                 onChange={onChangeUserName}
                 required
               />
@@ -54,7 +54,7 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="Password"
-                value={password}
+                value={values.password}
                 onChange={onChangePassword}
                 required
               />

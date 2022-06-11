@@ -10,9 +10,9 @@ namespace API.MiddleWare
 {
     public class MiddlewareException
     {
+        private readonly IHostEnvironment environment;
+        private readonly  ILogger<MiddlewareException> logger;
         private readonly RequestDelegate next;
-         ILogger<MiddlewareException> logger;
-         IHostEnvironment environment;
 
         public MiddlewareException(RequestDelegate next, ILogger<MiddlewareException> logger, IHostEnvironment environment)
         {

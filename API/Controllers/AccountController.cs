@@ -17,11 +17,11 @@ namespace API.Controllers
         private readonly Token token;
         private readonly dbContext db;
 
-        public AccountController(UserManager<User> userManager, Token token, dbContext context)
+        public AccountController(UserManager<User> userManager, Token token)
         {
-            db = context;
-            this.token = token;
+            // db = context;
             this.userManager = userManager;
+            this.token = token;
         }
 
         [HttpPost("login")]
@@ -33,11 +33,12 @@ namespace API.Controllers
                 return Unauthorized();
             }
 
-            if (await userManager.CheckPasswordAsync(user, loginAccess.Password) == false)
+            if (!await userManager.CheckPasswordAsync(user, loginAccess.Password))
             {
                 return Unauthorized();
             }
 
+            // We are creating a token and return it the user.
             return new UserAccess
             {
                 Email = user.Email,

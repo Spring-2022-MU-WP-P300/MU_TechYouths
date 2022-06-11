@@ -43,6 +43,7 @@ namespace API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                // Configuring swagger to send the authentication
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Security",
@@ -76,26 +77,34 @@ namespace API
 
             services.AddCors();
             
-            services.AddIdentityCore<User>(option =>
-            {
-                option.User.RequireUniqueEmail = true;
-            }).AddRoles<IdentityRole>().AddEntityFrameworkStores<dbContext>();
+            services.AddIdentityCore<User>(
+                option => {                    
+                    // option.Password.RequireUppercase = false;
+                    // option.Password.RequireNonAlphanumeric = false;
+                    // option.Password.RequiredLength = 8;
+                    option.User.RequireUniqueEmail = true; // We do not want to allow duplicate email.
+                }
+            ).AddRoles<IdentityRole>().AddEntityFrameworkStores<dbContext>();
             
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            // we are introducing what authentication scheme are using here.
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
             {
-                    opt.TokenValidationParameters = new TokenValidationParameters
+                    option.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        ValidateLifetime = true,
+                        ValidateLifetime = true, // this is equal to true because we have used an expiry date.
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
                             .GetBytes(Configuration["JWTSettings:TokenKey"]))
                     };
             });
-
+            
             services.AddAuthorization();
 
+            // after injecting this service, it will be created by Dot Net.
+            // the service is going to be scoped to out HTTP request.
+            // when HTTP response is destroyed, then this service will be disposed by Dot Net.
             services.AddScoped<Token>();
         }
  
@@ -119,8 +128,10 @@ namespace API
 
             app.UseRouting();
 
+            // use middleware for authentication
             app.UseAuthentication();
 
+            // use middleware
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
