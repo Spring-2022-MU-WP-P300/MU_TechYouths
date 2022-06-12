@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Account } from "../../helpers/apiSetup";
-import { setLoginUserData } from "./AccountSlice";
+import { setLogin } from "./AccountSlice";
 
 import "./Login.css";
 
@@ -25,9 +25,11 @@ const Login = () => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const data = await Account.login(values);
+    console.log("data", data);
+    console.log("JSON.stringify(data)", JSON.stringify(data));
     localStorage.setItem("user", JSON.stringify(data));
     history("/catalog");
-    // dispatch(setLoginUserData(data));
+    dispatch(setLogin({ payload: data }));
     return data;
   };
 

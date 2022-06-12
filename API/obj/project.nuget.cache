@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VZ08ceySneYwsy/vwysdUbZCSTzYcN2XaTcEU7t6/HzBrXCdVpi8Bp08bYYnKashVzmAe9KwO/iO84Pon/bnMw==",
+  "dgSpecHash": "Yo7nJ4B5ZFYbgapW4fGHGQhFGQjS4Ht113sHlK/laCF+Q2sfeMXHQE6IxseNx4NQNfLiIcALOrIJeQO5XDeC1w==",
   "success": true,
   "projectFilePath": "C:\\MyDrive\\MU_TechYouths\\API\\API.csproj",
   "expectedPackageFiles": [
@@ -51,7 +51,8 @@
     "C:\\Users\\mushf\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.1\\system.diagnostics.diagnosticsource.5.0.1.nupkg.sha512",
     "C:\\Users\\mushf\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.7.1\\system.identitymodel.tokens.jwt.6.7.1.nupkg.sha512",
     "C:\\Users\\mushf\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
-    "C:\\Users\\mushf\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512"
+    "C:\\Users\\mushf\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512",
+    "C:\\Users\\mushf\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
   ],
   "logs": []
 }

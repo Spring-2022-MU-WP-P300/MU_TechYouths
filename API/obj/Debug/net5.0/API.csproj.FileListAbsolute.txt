@@ -5,7 +5,6 @@ C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\API.deps.json
 C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\API.runtimeconfig.json
 C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\API.runtimeconfig.dev.json
 C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\API.dll
-C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\ref\API.dll
 C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\API.pdb
 C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Humanizer.dll
 C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
@@ -59,7 +58,6 @@ C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.csproj.CoreCompileInputs.cache
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.MvcApplicationPartsAssemblyInfo.cs
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.MvcApplicationPartsAssemblyInfo.cache
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\staticwebassets\API.StaticWebAssets.Manifest.cache
-C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\staticwebassets\API.StaticWebAssets.xml
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\scopedcss\bundle\API.styles.css
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.RazorTargetAssemblyInfo.cache
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.csproj.CopyComplete
@@ -67,3 +65,5 @@ C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.dll
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\ref\API.dll
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.pdb
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.genruntimeconfig.cache
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\API.StaticWebAssets.xml
+C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\refint\API.dll

@@ -9,11 +9,12 @@ import {
   Badge,
   Box,
 } from "@mui/material";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CartItem } from "../../models/cart";
+import { setLogOut } from "../Account/AccountSlice";
 
 const navLinks = [
   { title: "Products", path: "/catalog" },
@@ -22,18 +23,19 @@ const navLinks = [
 ];
 
 const logInLink = { title: "Login", path: "/login" };
-const logOutLink = { title: "Signup", path: "/sign-up" };
+const logOutLink = { title: "Logout", path: "/" };
 
 const Header = () => {
-  const { currentUser } = useSelector((state: any) => state.accountSlice);
   const { cart } = useSelector((state: any) => state.cartSlice);
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state.accountSlice);
+  const history = useNavigate();
 
   const totalItems = (cart ? cart.items : []).reduce(
     (cur: number, item: CartItem) => cur + item.currentQuantity,
     0
   );
-
-  const isLoggedIn = currentUser !== null && currentUser !== undefined;
 
   return (
     <div>
@@ -81,7 +83,7 @@ const Header = () => {
                   </ListItem>
                 );
               })}
-              {!isLoggedIn ? (
+              {user == null || user == undefined ? (
                 <ListItem
                   to={logInLink.path}
                   component={NavLink}
@@ -105,6 +107,10 @@ const Header = () => {
                       color: "secondary.main",
                       fontWeight: 900,
                     },
+                  }}
+                  onClick={() => {
+                    dispatch(setLogOut());
+                    history("/");
                   }}
                 >
                   {logOutLink.title}

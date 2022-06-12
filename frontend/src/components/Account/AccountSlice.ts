@@ -21,13 +21,14 @@ export const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
-    setLoginUserData: (state, action) => {},
-    logOut: (state, action) => {
+    setLogin: (state, action) => {
+      state.user = { ...action.payload.data };
+    },
+    setLogOut: (state) => {
       state.user = null;
       localStorage.removeItem("user");
-      // useNavigate("/catalog");
     },
   },
 });
 
-export const { setLoginUserData } = accountSlice.actions;
+export const { setLogin, setLogOut } = accountSlice.actions;
