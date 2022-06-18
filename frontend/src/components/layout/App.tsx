@@ -15,12 +15,17 @@ import Header from "./Header";
 import { setCart } from "../../components/Cart/CartSlice";
 import Login from "../../components/Account/Login";
 import Register from "../../components/Account/Register";
+import { setLogin } from "../Account/AccountSlice";
 
 const App = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state: any) => state.cartSlice);
+  const { user } = useSelector((state: any) => state.accountSlice);
 
   useEffect(() => {
+    if (localStorage.getItem("user")) {
+      dispatch(setLogin(JSON.parse(localStorage.getItem("user")!)));
+    }
     const clientId = getCookie("clientId");
     if (clientId) {
       Products.cart.get().then((data) => dispatch(setCart(data)));
