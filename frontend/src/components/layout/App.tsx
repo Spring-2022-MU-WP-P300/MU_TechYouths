@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container } from "@mui/material";
+import { Container, CssBaseline } from "@mui/material";
 
 import Catalog from "../../components/Catalog/Catalog";
 import { Route, Routes } from "react-router-dom";
@@ -16,6 +16,7 @@ import { setCart } from "../../components/Cart/CartSlice";
 import Login from "../../components/Account/Login";
 import Register from "../../components/Account/Register";
 import { setLogin } from "../Account/AccountSlice";
+import Footer from "../UI/footer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ const App = () => {
           <Route path="/cart" element={<CartPage />} />
         </Routes>
       </Container>
+      <CssBaseline />
+      <Footer />
     </div>
   );
 };

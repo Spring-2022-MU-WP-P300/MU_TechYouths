@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import "./about.css";
 
 const About = () => {
+  const history = useNavigate();
+
   return (
     <div className="about">
       <div className="inner-section">
@@ -15,7 +18,7 @@ const About = () => {
           priority list. Thank You for us!!
         </p>
         <div className="skills">
-          <button>Contact Us</button>
+          <button onClick={() => history("/contact")}>Contact Us</button>
         </div>
       </div>
     </div>
