@@ -23,25 +23,36 @@ namespace API.Controllers
         [HttpGet(Name = "get-cart")]
         public async Task<ActionResult<CartDA>> GetCart()
         {
-            var cart = await getCart();
+            var cart = await getCart(GetClientId());
             return cart == null
                     ? NotFound()
                     : CartToCartDA(cart);
         }
 
-        private async Task<Cart> getCart()
+        private async Task<Cart> getCart(string clientId)
         {
+            if (string.IsNullOrEmpty(clientId))
+            {
+                Response.Cookies.Delete("clientId");
+                return null;
+            }
+
             return await db.Carts
                             .Include(item => item.CartItems)
                             .ThenInclude(item => item.Product)
-                            .FirstOrDefaultAsync(x => x.ClientId == Request.Cookies["clientId"]);
+                            .FirstOrDefaultAsync(x => x.ClientId == clientId);
 
+        }
+
+        private string GetClientId()
+        {
+            return User.Identity?.Name ?? Request.Cookies["clientId"];
         }
 
         [HttpPost]
         public async Task<ActionResult<CartDA>> AddCart(int productId, int quantity = 1)
         {
-            var cart = await getCart();
+            var cart = await getCart(GetClientId());
             if (cart == null)
             {
                 cart = CreateCart();
@@ -59,18 +70,23 @@ namespace API.Controllers
 
         private Cart CreateCart ()
         {
-            var clientId = Guid.NewGuid().ToString();
-            var cookiesOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(90)};
-            Response.Cookies.Append("clientId", clientId, cookiesOptions);
+            var clientId = User.Identity?.Name;
+            if (string.IsNullOrEmpty(clientId))
+            {
+                clientId = Guid.NewGuid().ToString();
+                var cookiesOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30)};
+                Response.Cookies.Append("clientId", clientId, cookiesOptions);
+            }
+            
             var cart  = new Cart { ClientId = clientId };
             db.Carts.Add(cart);
-            return cart;
+            return cart; 
         }
 
          [HttpDelete]
         public async Task<ActionResult> DeleteCart(int productId, int quantity = 1)
         {
-            var cart = await getCart();
+            var cart = await getCart(GetClientId());
 
              if (cart == null)
             {

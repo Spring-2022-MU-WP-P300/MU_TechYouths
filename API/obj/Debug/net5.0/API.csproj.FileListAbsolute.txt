@@ -65,4 +65,5 @@ C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.dll
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\ref\API.dll
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.pdb
 C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\API.genruntimeconfig.cache
-C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\refint\API.dll
+C:\MyDrive\MU_TechYouths\API\bin\Debug\net5.0\ref\API.dll
+C:\MyDrive\MU_TechYouths\API\obj\Debug\net5.0\staticwebassets\API.StaticWebAssets.xml

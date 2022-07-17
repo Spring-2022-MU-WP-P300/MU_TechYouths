@@ -5,6 +5,7 @@ import { Account } from "../../helpers/apiSetup";
 import { setLogin } from "./AccountSlice";
 
 import "./Login.css";
+import { setCart } from "../Cart/CartSlice";
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -25,12 +26,16 @@ const Login = () => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const data = await Account.login(values);
-    console.log("data", data);
-    console.log("JSON.stringify(data)", JSON.stringify(data));
-    localStorage.setItem("user", JSON.stringify(data));
+    const { cart, ...user } = data;
+    if (cart) {
+      dispatch(setCart(cart));
+    }
+    // console.log("data", data);
+    // console.log("JSON.stringify(data)", JSON.stringify(data));
+    localStorage.setItem("user", JSON.stringify(user));
     history("/catalog");
-    dispatch(setLogin({ payload: data }));
-    return data;
+    dispatch(setLogin({ payload: user }));
+    return user;
   };
 
   return (

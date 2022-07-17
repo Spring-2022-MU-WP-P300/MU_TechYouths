@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { CartItem } from "../../models/cart";
 import { setLogOut } from "../Account/AccountSlice";
+import { clearCart } from "../Cart/CartSlice";
 
 const navLinks = [
   { title: "Products", path: "/catalog" },
@@ -110,6 +111,7 @@ const Header = () => {
                   }}
                   onClick={() => {
                     dispatch(setLogOut());
+                    dispatch(clearCart());
                     history("/");
                   }}
                 >

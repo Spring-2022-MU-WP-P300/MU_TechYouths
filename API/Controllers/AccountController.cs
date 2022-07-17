@@ -17,11 +17,12 @@ namespace API.Controllers
         private readonly Token token;
         private readonly dbContext db;
 
-        public AccountController(UserManager<User> userManager, Token token)
+        public AccountController(UserManager<User> userManager, Token token, dbContext dbo)
         {
             // db = context;
             this.userManager = userManager;
             this.token = token;
+            this.db = dbo;
         }
 
         [HttpPost("login")]
@@ -38,11 +39,25 @@ namespace API.Controllers
                 return Unauthorized();
             }
 
+            var userCart = await getCart(loginAccess.Username);
+            var anonCart = await getCart(Request.Cookies["clientId"]);
+
+            if (anonCart != null)
+            {
+                if (userCart != null) {
+                    db.Carts.Remove(userCart);                    
+                }
+                anonCart.ClientId = user.UserName;
+                Response.Cookies.Delete("clientId");
+                await db.SaveChangesAsync();
+            }
+
             // We are creating a token and return it the user.
             return new UserAccess
             {
                 Email = user.Email,
                 Token = await token.GenerateToken(user),
+                Cart = anonCart != null ? CartToCartDA(anonCart) : CartToCartDA( userCart)
             };
         }
 
@@ -78,6 +93,41 @@ namespace API.Controllers
                 Email = user.Email,
                 Token = await token.GenerateToken(user)
             };
+        }
+
+        private async Task<Cart> getCart(string clientId)
+        {
+            if (string.IsNullOrEmpty(clientId))
+            {
+                Response.Cookies.Delete("clientId");
+                return null;
+            }
+
+            return await db.Carts
+                            .Include(item => item.CartItems)
+                            .ThenInclude(item => item.Product)
+                            .FirstOrDefaultAsync(x => x.ClientId == clientId);
+
+        }
+
+        private CartDA CartToCartDA (Cart cart)
+        {
+           return  new CartDA {
+                        Id = cart.Id,
+                        ClientId = cart.ClientId,
+                        Items = cart.CartItems.Select(item => new CartDAItem
+                        {
+                            ProductId = item.ProductId,
+                            Name = item.Product.Name,
+                            Price = item.Product.Price,
+                            PictureUrl = item.Product.PictureUrl,
+                            Type = item.Product.Type,
+                            Brand = item.Product.Brand,
+                            Description = item.Product.Description,
+                            CurrentQuantity = item.Quantity,
+                            Warranty = item.Product.Warranty                            
+                        }).ToList()
+                    };
         }
     }
 }
