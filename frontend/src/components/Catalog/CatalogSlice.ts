@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { MetaData } from "../../models/pagination";
 import { Product } from "../../models/product";
 import { ProductParameters } from "../../models/ProductParameters";
 
@@ -9,6 +10,7 @@ interface CatalogState {
   ProductParams: ProductParameters;
   ProductLoaded: boolean;
   FiltersLoaded: boolean;
+  metaData: MetaData | null;
 }
 
 const initialState: CatalogState = {
@@ -19,12 +21,13 @@ const initialState: CatalogState = {
   FiltersLoaded: false,
   ProductParams: {
     PageNumber: 1,
-    PageSize: 10,
+    PageSize: 6,
     OrderBy: "name",
     Search: "",
     Brands: [],
     Types: [],
   },
+  metaData: null,
 };
 
 export const catalogSlice = createSlice({
@@ -49,6 +52,9 @@ export const catalogSlice = createSlice({
     setProductLoadingStatus: (state, action) => {
       state.ProductLoaded = action.payload;
     },
+    setMetaData: (state, action) => {
+      state.metaData = action.payload;
+    },
   },
 });
 
@@ -59,4 +65,5 @@ export const {
   setFilter,
   setTypes,
   setProductLoadingStatus,
+  setMetaData,
 } = catalogSlice.actions;

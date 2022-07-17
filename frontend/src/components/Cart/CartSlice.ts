@@ -14,6 +14,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     clearCart: (state) => {
+      console.log();
       state.cart = null;
     },
     setCart: (state, action) => {

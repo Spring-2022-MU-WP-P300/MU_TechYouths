@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../../components/UI/home";
 import About from "../../components/UI/about";
 import Contact from "../../components/UI/contact";
-import ProductDetail from "../../components/UI/ProductDetail";
+import ProductDetail from "../Catalog/ProductDetail";
 import CartPage from "../../components/Cart/Cart";
 import { getCookie } from "../../helpers/helpers";
 import Products from "../../helpers/apiSetup";
