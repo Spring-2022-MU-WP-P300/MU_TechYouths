@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Products from "../../helpers/apiSetup";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,14 +16,22 @@ import {
 } from "./CatalogSlice";
 import { Product } from "../../models/product";
 import {
+  Checkbox,
+  debounce,
   FormControl,
   FormControlLabel,
+  FormGroup,
   Grid,
+  Pagination,
   Paper,
   Radio,
   RadioGroup,
+  TextField,
+  Typography,
 } from "@mui/material";
 import ProductList from "./ProductList";
+import { Box } from "@mui/system";
+import CheckboxButtons from "./CheckboxButtons";
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -42,37 +50,30 @@ const Catalog = (props: Props) => {
     FiltersLoaded,
   } = useSelector((state: any) => state.catalogSlice);
 
-  console.log(
-    products,
-    brands,
-    types,
-    ProductParams,
-    ProductLoaded,
-    FiltersLoaded
-  );
+  const [search, setSearch] = useState(ProductParams.search);
+
+  console.log(ProductParams, brands);
 
   useEffect(() => {
-    if (!ProductLoaded) {
-      // fetch("http://localhost:5000/api/products")
-      //   .then((response) => response.json())
-      //   .then((data) => setProducts(data));
-      const parameters = getParameters(ProductParams);
+    const parameters = getParameters(ProductParams);
 
-      Products.list(parameters).then((data) => {
-        dispatch(setProducts(data));
-        dispatch(setBrands(getAllBrands(data)));
-        dispatch(setTypes(getAllTypes(data)));
-        dispatch(setProductLoadingStatus(true));
-        dispatch(setProductLoadingStatus(true));
-      });
+    Products.list(parameters).then((data) => {
+      dispatch(setProducts(data));
+      dispatch(setBrands(getAllBrands(data)));
+      dispatch(setTypes(getAllTypes(data)));
+    });
+  }, []);
 
-      if (!FiltersLoaded) {
-        Products.fetchFilters().then((data) => {
-          dispatch(setFilter(true));
-        });
-      }
-    }
-  }, [FiltersLoaded, ProductLoaded, ProductParams, dispatch]);
+  useEffect(() => {
+    // fetch("http://localhost:5000/api/products")
+    //   .then((response) => response.json())
+    //   .then((data) => setProducts(data));
+    const parameters = getParameters(ProductParams);
+
+    Products.list(parameters).then((data) => {
+      dispatch(setProducts(data));
+    });
+  }, [ProductParams, dispatch]);
 
   const addProduct = () => {
     // setProducts({
@@ -88,17 +89,32 @@ const Catalog = (props: Props) => {
     // });
   };
 
+  const debouncedSearch = debounce((e) => {
+    dispatch(setProductParams({ Search: e.target.value }));
+  }, 1000);
+
   return (
     <>
       <Grid container columnSpacing={4}>
         <Grid item xs={3}>
-          <Paper sx={{ mb: 2 }}>{/* <ProductSearch /> */}</Paper>
+          <Paper sx={{ mb: 2 }}>
+            <TextField
+              label="Search Products"
+              variant="outlined"
+              fullWidth
+              value={search || ""}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                debouncedSearch(e);
+              }}
+            />
+          </Paper>
           <Paper sx={{ mb: 2, p: 2 }}>
             <FormControl component="fieldset">
               <RadioGroup
-                onChange={(e) =>
-                  dispatch(setProductParams({ orderBy: e.target.value }))
-                }
+                onChange={(e) => {
+                  dispatch(setProductParams({ OrderBy: e.target.value }));
+                }}
                 value={ProductParams.orderBy}
               >
                 {sortOptions.map(({ value, label }) => (
@@ -113,22 +129,22 @@ const Catalog = (props: Props) => {
             </FormControl>
           </Paper>
           <Paper sx={{ mb: 2, p: 2 }}>
-            {/* <CheckboxButtons
+            <CheckboxButtons
               items={brands}
-              checked={productParams.brands}
+              checked={ProductParams.Brands}
               onChange={(items: string[]) =>
-                dispatch(setProductParams({ brands: items }))
+                dispatch(setProductParams({ Brands: items }))
               }
-            /> */}
+            />
           </Paper>
           <Paper sx={{ mb: 2, p: 2 }}>
-            {/* <CheckboxButtons
+            <CheckboxButtons
               items={types}
-              checked={productParams.types}
+              checked={ProductParams.Types}
               onChange={(items: string[]) =>
-                dispatch(setProductParams({ types: items }))
+                dispatch(setProductParams({ Types: items }))
               }
-            /> */}
+            />
           </Paper>
         </Grid>
         <Grid item xs={9}>
@@ -144,6 +160,20 @@ const Catalog = (props: Props) => {
               }
             />
           )} */}
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography>Displaying 1 to 6 of 20 items</Typography>
+            <Pagination
+              color="secondary"
+              size="large"
+              count={10}
+              page={10}
+              // onChange={(e, page) => handlePageChange(page)}
+            />
+          </Box>
         </Grid>
       </Grid>
     </>

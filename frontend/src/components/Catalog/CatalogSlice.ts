@@ -13,20 +13,24 @@ interface CatalogState {
   metaData: MetaData | null;
 }
 
-const initialState: CatalogState = {
-  products: [],
-  brands: [],
-  types: [],
-  ProductLoaded: false,
-  FiltersLoaded: false,
-  ProductParams: {
+const initParams = () => {
+  return {
     PageNumber: 1,
     PageSize: 6,
     OrderBy: "name",
     Search: "",
     Brands: [],
     Types: [],
-  },
+  };
+};
+
+const initialState: CatalogState = {
+  products: [],
+  brands: [],
+  types: [],
+  ProductLoaded: false,
+  FiltersLoaded: false,
+  ProductParams: initParams(),
   metaData: null,
 };
 
@@ -45,6 +49,9 @@ export const catalogSlice = createSlice({
     },
     setProductParams: (state, action) => {
       state.ProductParams = { ...state.ProductParams, ...action.payload };
+    },
+    removeProductParams: (state, action) => {
+      state.ProductParams = initParams();
     },
     setFilter: (state, action) => {
       state.FiltersLoaded = action.payload;

@@ -1701,11 +1701,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\MyDrive\\MU_TechYouths\\API\\API.csproj",
+      "projectUniqueName": "C:\\MyDrive\\p300\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\MyDrive\\MU_TechYouths\\API\\API.csproj",
+      "projectPath": "C:\\MyDrive\\p300\\API\\API.csproj",
       "packagesPath": "C:\\Users\\mushf\\.nuget\\packages\\",
-      "outputPath": "C:\\MyDrive\\MU_TechYouths\\API\\obj\\",
+      "outputPath": "C:\\MyDrive\\p300\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mushf\\AppData\\Roaming\\NuGet\\NuGet.Config"
