@@ -1,27 +1,19 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
+using API.Data;
+using API.Entities;
+using API.Middleware;
+using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using API.Entities;
-using API.Data;
-using Microsoft.EntityFrameworkCore;
-using API.MiddleWare;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using API.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.IdentityModel.Tokens;
-using System.Text; // The name 'Encoding' exists here
+using Microsoft.OpenApi.Models;
 
 namespace API
 {
@@ -37,20 +29,18 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddControllers();
 
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-                // Configuring swagger to send the authentication
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Security",
+                    Description = "Jwt auth header",
                     Name = "Authorization",
-                    Scheme = "Bearer",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -70,68 +60,54 @@ namespace API
                     }
                 });
             });
-            
-            services.AddDbContext<dbContext>((option) => {
-                option.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            services.AddCors();
-            
-            services.AddIdentityCore<User>(
-                option => {                    
-                    // option.Password.RequireUppercase = false;
-                    // option.Password.RequireNonAlphanumeric = false;
-                    // option.Password.RequiredLength = 8;
-                    option.User.RequireUniqueEmail = true; // We do not want to allow duplicate email.
-                }
-            ).AddRoles<IdentityRole>().AddEntityFrameworkStores<dbContext>();
-            
-            // we are introducing what authentication scheme are using here.
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
+            services.AddDbContext<StoreContext>(opt =>
             {
-                    option.TokenValidationParameters = new TokenValidationParameters
+                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            services.AddCors();
+            services.AddIdentityCore<User>(opt =>
+            {
+                opt.User.RequireUniqueEmail = true;
+            })
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<StoreContext>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        ValidateLifetime = true, // this is equal to true because we have used an expiry date.
+                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
                             .GetBytes(Configuration["JWTSettings:TokenKey"]))
                     };
-            });
-            
+                });
             services.AddAuthorization();
-
-            // after injecting this service, it will be created by Dot Net.
-            // the service is going to be scoped to out HTTP request.
-            // when HTTP response is destroyed, then this service will be disposed by Dot Net.
-            services.AddScoped<Token>();
+            services.AddScoped<TokenService>();
         }
- 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<MiddlewareException>();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             if (env.IsDevelopment())
             {
-                // app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
 
-            app.UseCors(options => {
-                options.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:3000");
-            });
-
             // app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(opt =>
+            {
+                opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+            });
 
-            // use middleware for authentication
             app.UseAuthentication();
-
-            // use middleware
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

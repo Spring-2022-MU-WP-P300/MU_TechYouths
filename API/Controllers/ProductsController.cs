@@ -1,82 +1,57 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
+using API.Extensions;
+using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using API.DataAccess;
-using System.Text.Json;
-
-// DOCUMENTATION NEEDED
 
 namespace API.Controllers
-{    
-    public class ProductsController : BaseController
+{
+    public class ProductsController : BaseApiController
     {
-        private readonly dbContext db;
-        public ProductsController(dbContext dbo)
+        private readonly StoreContext _context;
+        public ProductsController(StoreContext context)
         {
-            db = dbo;
+            _context = context;
         }
-        
+
         [HttpGet]
-        public async Task<ActionResult<PageList<Product>>> GetProducts([FromQuery]ProductParameters param)
+        public async Task<ActionResult<PagedList<Product>>> GetProducts([FromQuery]ProductParams productParams)
         {
-            var query = db.Products.AsQueryable();
+            var query = _context.Products
+                .Sort(productParams.OrderBy)
+                .Search(productParams.SearchTerm)
+                .Filter(productParams.Brands, productParams.Types)
+                .AsQueryable();
 
-            query = param.OrderBy switch
-            {
-                "priceASC" => query.OrderBy(p => p.Price),
-                "priceDSC" => query.OrderByDescending(p => p.Price),
-                _ => query.OrderBy(p => p.Name)
-            };
+            var products = await PagedList<Product>.ToPagedList(query, 
+                productParams.PageNumber, productParams.PageSize);
 
-            var brandList = new List<string>();
-            var typeList = new List<string>();
-            if (!string.IsNullOrEmpty(param.Brands))
-            {
-                brandList.AddRange(param.Brands.ToLower().Split(",").ToList());
-            }
+            Response.AddPaginationHeader(products.MetaData);
 
-            if (!string.IsNullOrEmpty(param.Types))
-            {
-                typeList.AddRange(param.Types.ToLower().Split(",").ToList());
-            }
-
-            query = query.Where(x => brandList.Count == 0 || brandList.Contains(x.Brand.ToLower()));
-            query = query.Where(x => typeList.Count == 0 || typeList.Contains(x.Type.ToLower()));
-            
-            if (!string.IsNullOrEmpty(param.Search)){
-                var lowerCase = param.Search.Trim().ToLower();
-                query = query.Where(x => x.Name.ToLower().Contains(param.Search));
-            }
-
-            var curProducts = await PageList<Product>.ToPageList(query, param.PageNumber, param.PageSize);
-
-            var opt = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            Response.Headers.Add("Paging", JsonSerializer.Serialize(curProducts.Data, opt));
-            Response.Headers.Add("Access-Control-Expose-Headers", "Paging");
-
-            return curProducts;
+            return products;
         }
 
-        [HttpGet("{id}")] // api/products/1
+        [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await db.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null) return NotFound();
+
             return product;
         }
 
         [HttpGet("filters")]
         public async Task<IActionResult> GetFilters()
         {
-            var types = await db.Products.Select(p => p.Type).Distinct().ToListAsync();
-            var brands = await db.Products.Select(p => p.Brand).Distinct().ToListAsync();
+            var brands = await _context.Products.Select(p => p.Brand).Distinct().ToListAsync();
+            var types = await _context.Products.Select(p => p.Type).Distinct().ToListAsync();
+
             return Ok(new {brands, types});
         }
     }
