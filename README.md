@@ -20,7 +20,7 @@ This is a browser based app.
 3. dotnet sln add API
 4. Go to API: dotnet tool install --global dotnet-ef --version 5.0.8
 
-Installed Packages:
+Some Installed Packages:
 
 1. Material UI
 2. react-router-dom
@@ -28,7 +28,6 @@ Installed Packages:
 4. @mui/lab
 5. react-redux
 6. @reduxjs/toolkit
-7. react-scripts --save
 
 Microsoft.EntityFrameworkCore.Sqlite v5.08 with API.csproj
 Microsoft.EntityFrameworkCore.Design v5.08 with API.csproj
@@ -45,9 +44,11 @@ Run APP in developer mode: Go to API -> dotnet run
 # Migrations
 
 dotnet ef migrations add InitialCreate -o Properties/Migrations
+
+# Database Update
 dotnet ef database update
 
-How to migrate a new app?
+# How to migrate a new app?
 dotnet ef migrations add Cart
 
 # How to open the database
@@ -84,9 +85,8 @@ options.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
 
 # Learning Resources and Reference
 
-Learn to build an e-commerce store with .Net, React & Redux
-Link:
+1. Learn to build an e-commerce store with .Net, React & Redux
 https://www.udemy.com/course/learn-to-build-an-e-commerce-store-with-dotnet-react-redux/?utm_source=adwords&utm_medium=udemyads&utm_campaign=LongTail_la.EN_cc.ROW&utm_content=deal4584&utm_term=_._ag_77879424134_._ad_535397245863_._kw__._de_c_._dm__._pl__._ti_dsa-1007766171312_._li_9069450_._pd__._&matchtype=&gclid=CjwKCAjw5s6WBhA4EiwACGncZcR9rQ6pdqvNT8NPZyI4R3SuxTXKzZo-9GBrWLlKxPEQFJBDmD2ArRoCuCQQAvD_BwE
 
-React - The Complete Guide (incl Hooks, React Router, Redux)
-Link: https://www.udemy.com/course/react-the-complete-guide-incl-redux/
+2. React - The Complete Guide (incl Hooks, React Router, Redux)
+https://www.udemy.com/course/react-the-complete-guide-incl-redux/
